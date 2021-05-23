@@ -1,7 +1,7 @@
 import os
 
 from werkzeug.utils import secure_filename
-from flask import (
+from flask import(
     Flask,
     jsonify,
     send_from_directory,
@@ -47,25 +47,23 @@ def mediafiles(filename):
 @app.route("/upload", methods=["GET", "POST"])
 def upload_file():
     if ('image' not in request.files):
-		resp = jsonify({'message' : 'No file part in the request'})
-		resp.status_code = 400
-		return resp
-	else:
-		try:
+        resp = jsonify({'message' : 'No file part in the request'})
+        resp.status_code = 400
+        return resp
+    else:
+        try:
             id = request.values['id']
             name = request.values['name']
-			image = request.files['image']
+            image = request.files['image']
             filename = secure_filename(image.filename)
-
-			if filename == '':
+            if filename == '':
                 resp = jsonify({'message' : 'No file selected for uploading'})
                 resp.status_code = 400
                 return resp
-			
-			user = User(id, name, filename)
+            user = User(id, name, filename)
             db.session.add(user)
             db.session.commit()
-            return jsonify({'message': 'success'}), 201
+            return jsonify({'id': id,'name': name, 'image': filename}), 201
             
-		except Exception as e:
-			return jsonify({'message' : e}), 400
+        except Exception as e:
+            return jsonify({'message' : e}), 400
