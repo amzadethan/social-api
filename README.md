@@ -1,14 +1,23 @@
-# Social API
+### Development
 
+For the default Flask development server.
 
-# To run
+1. Build the images and run the containers:
 
-Uses the default Flask development server.
-
-Build the images and run the containers:
-
-    ```sh
+    sh
     $ docker-compose up -d --build
-    ```
+    
 
-    Test it out at [http://localhost:3005](http://localhost:3005)
+    Test it out at [http://localhost:3005](http://localhost:3005).
+
+### Production
+
+gunicorn + nginx.
+
+1. Build the images and run the containers:
+
+    sh
+    $ docker-compose -f docker-compose.prod.yml up -d --build
+    
+
+    Test it out at [http://localhost:1337](http://localhost:1337)
