@@ -45,7 +45,7 @@ def mediafiles(filename):
 
 
 @app.route("/upload", methods=["GET", "POST"])
-def upload_file():
+def user():
     if ('image' not in request.files):
         resp = jsonify({'message' : 'No file part in the request'})
         resp.status_code = 400
@@ -60,6 +60,9 @@ def upload_file():
                 resp = jsonify({'message' : 'No file selected for uploading'})
                 resp.status_code = 400
                 return resp
+            else:
+                image.save(os.path.join(app.config["MEDIA_FOLDER"], filename))
+                
             user = User(id, name, filename)
             db.session.add(user)
             db.session.commit()
